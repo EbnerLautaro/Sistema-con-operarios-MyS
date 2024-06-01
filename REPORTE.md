@@ -12,10 +12,5 @@ Diremos que el supermercado **deja de ser operativo** cuando se cumple que se po
 
 Tambien aclararemos que todos los tiempos de funcionamiento de las cajas hasta descomponerse y los tiempos de raparacion son variables independientes con distribucion exponencial con sus respectivos parametros antes mencionado.
 
-$$
-\begin{aligned} 
-    2x - 4  &= 6 \\ 
-    2x      &= 10 \\ 
-    x       &= 5 
-\end{aligned}
-$$
+
+luego vemos que 
