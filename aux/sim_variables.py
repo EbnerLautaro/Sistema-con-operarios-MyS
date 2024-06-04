@@ -1,14 +1,6 @@
-import random, math
+import random
+import math
 from typing import List, Tuple
-
-"""
-Supongo que aca pondremos las simulaciones de variables
-- exponencial
-- procesos de poisson
-- qsy
-
-Despues seguro vuela todo a la mierda y ponemos todo en un archivo
-"""
 
 
 def exponencial(lamda: float) -> float:
