@@ -196,15 +196,21 @@ def simulacion_M_operarios(N: int, S: int, Tf: float, Tr: float, M: int) -> floa
 
         elif min(t_reparacion) <= fallos[0]:
 
+            # adelantamos el tiempo hasta que termine la reparacion
+            index = t_reparacion.index(min(t_reparacion))
+            t = t_reparacion[index]
+            t_reparacion[index] = math.inf
             cant_defectuosas = cant_defectuosas - 1
 
-            index = t_reparacion.index(min(t_reparacion))
+            cant_en_reparacion = len(
+                [x for x in t_reparacion if x != math.inf]
+            )
 
-            # adelantamos el tiempo hasta que termine la reparacion
-            t = t_reparacion[index]
+            # cantidad de maquinas que no estan siendo trabajadas
+            cant_reparables = cant_defectuosas - cant_en_reparacion
 
             # si hay para reparar, empezamos a reparar
-            if cant_defectuosas > 0:
+            if cant_reparables > 0:
                 t_reparacion[index] = t + random.expovariate(Tr)
 
             # dejamos de reparar
@@ -218,7 +224,7 @@ if __name__ == '__main__':
     S = 3
     Tf = 1
     Tr = 8
-    M = 1
+    M = 2
 
     def simulacion():
         return simulacion_M_operarios(N=N, S=S, Tf=Tf, Tr=Tr, M=M)
