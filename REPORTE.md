@@ -46,17 +46,23 @@ Como ya mencionamos antes, las variables o parametros de la simulacion utilizado
   - $T_{F}$: Tiempo medio hasta que una caja registradora falla.
   - $T_{R}$: Tiempo medio de reparación de una caja registradora.
 
-A continuacion daremos una simple explicacion de cada uno de los algoritmos planteados.
+A continuacion daremos una simple explicacion del algoritmo planteado.
 
-### **Sistema con un operario**
+### Inicializacion de tiempos de reparacion y fallos de maquinas
+Inicializamos los tiempos de reparaciones en infinito, simbolizamos con esto que no se esta reparando ninguna maquina.
+De manera similar, inicializamos generamos $N$ tiempos de falla para las maquinas y los ordenamos de menor a mayor.
 
-   1. Inicializa el tiempo (t) como 0, el número de máquinas defectuosas en el tiempo t como 0 y el tiempo de reparación (t_reparacion) como infinito.
-   2. Genera una lista de fallos de las cajas registradoras utilizando una distribución exponencial con una tasa promedio de fallos (Tf). La lista está ordenada de menor a mayor tiempo de fallo.
-   3. En un bucle infinito, el algoritmo evalúa continuamente si ocurre un fallo antes de que termine una reparación o si una reparación ocurre antes de que ocurra un fallo.
-   4. Si ocurre un fallo antes de una reparación, actualiza el tiempo (t) al tiempo del fallo y aumenta la cantidad de máquinas defectuosas.
-      - Si hay menos máquinas defectuosas que máquinas de repuesto más una (S+1), se elimina la máquina defectuosa y se agrega una nueva con un tiempo de fallo calculado.
-      - Si solo falla una máquina, se programa su reparación.
-      - Si la cantidad de máquinas defectuosas supera el límite de repuestos (S), el algoritmo devuelve el tiempo actual (t) indicando que el sistema ha fallado.
-   5. Si ocurre una reparación antes de un fallo, disminuye la cantidad de máquinas defectuosas, actualiza el tiempo (t) al tiempo de finalización de la reparación y, si hay más máquinas para reparar, programa la siguiente reparación.
-   6. El algoritmo continúa ejecutándose hasta que se alcanza un punto donde el sistema falla o hasta que se detiene la simulación. En cualquier caso, devuelve el tiempo en el que ocurrió el fallo del sistema.
+```python
+t_reparacion = [math.inf for _ in range(M)]
+fallos = [random.expovariate(Tf) for _ in range(N)]
+fallos.sort()
+```
 
+### Bucle principal de la simulacion
+Una vez completada la inicializacion, nos preguntamos cual es el proximo evento, es decir, si el proximo evento es un **fallo de una maquina** o una **finalizacion de una reparacion**. 
+```python
+if fallos[0] < t_reparacion:
+    # Ocurre un fallo antes de una reparacion
+elif fallos >= t_reparacion:
+    # Ocurre una reparacion antes de un fallo
+```

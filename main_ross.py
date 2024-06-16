@@ -165,7 +165,7 @@ def simulacion_M_operarios(N: int, S: int, Tf: float, Tr: float, M: int) -> floa
     t: float = 0
     cant_defectuosas: int = 0  # la cantidad de maquinas defectuosas al tiempo t
 
-    t_reparacion: list[float] = [math.inf for _ in range(M)]
+    t_reparacion = [math.inf for _ in range(M)]
     fallos = [random.expovariate(Tf) for _ in range(N)]
     fallos.sort()
 
@@ -202,9 +202,7 @@ def simulacion_M_operarios(N: int, S: int, Tf: float, Tr: float, M: int) -> floa
             t_reparacion[index] = math.inf
             cant_defectuosas = cant_defectuosas - 1
 
-            cant_en_reparacion = len(
-                [x for x in t_reparacion if x != math.inf]
-            )
+            cant_en_reparacion = len([x for x in t_reparacion if x != math.inf])
 
             # cantidad de maquinas que no estan siendo trabajadas
             cant_reparables = cant_defectuosas - cant_en_reparacion
@@ -218,7 +216,7 @@ def simulacion_M_operarios(N: int, S: int, Tf: float, Tr: float, M: int) -> floa
                 t_reparacion[index] = math.inf
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     N = 7
     S = 3
@@ -229,9 +227,7 @@ if __name__ == '__main__':
     def simulacion():
         return simulacion_M_operarios(N=N, S=S, Tf=Tf, Tr=Tr, M=M)
 
-    esperanza, varianza = calcular_metricas(
-        sim=simulacion, n_sim=10_000
-    )
+    esperanza, varianza = calcular_metricas(sim=simulacion, n_sim=10_000)
     print(f"\nsimulacion_M_operarios(N={N}, S={S}, Tf={Tf}, Tr={Tr}, M={M})\n")
     print(f"Esperanza\t{esperanza:.4f}")
     print(f"Varianza \t{varianza:.4f}")
