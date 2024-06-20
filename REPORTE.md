@@ -80,23 +80,19 @@ Con los algoritmos adjuntados realizamos simulaciones, correspondientes a:
   
 En todos los casos, el operario se tarda en promedio $1/8$ de mes en reparar una maquina, y las maquinas se rompen en promedio cada $1$ mes.
 A continuacion, mostramos los datos obtenidos en histogramas:
-<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 0px; grid-gap: 8px">
-    <img src="assets/Histograma-A.svg">
-    <img src="assets/Histograma-B.svg">
-    <img src="assets/Histograma-C.svg">
+
+<div style="text-align: center;">
+  <img src="assets/histogramas.png" alt="drawing" width="1000px"/>
+  <img src="assets/medias.png" alt="drawing" height="200px"/>
+  <img src="assets/desviaciones.png" alt="drawing" height="200px"/>
 </div>
-
-<p align="center">
-  <img src="assets/Media.svg" height=250px/>
-</p>
-
 
 ## Conclusiones
 Al ver los tres resultados podemos ponernos en la piel de un gerente de dicho establecimiendo y teniendo en cuenta que la siituacion actual del supermercado es el escenario A, nos proponemos tomar desiciones sobre que seria mas conveniente, agregar una caja registradora de repuesto o contratar a otro operario.
 
-En el Escenario B nos planteamos la contratacion de un nuevo operario. Segun nuestras simulaciones podemos notar que en promedio pasamos de tener un promedio de tiempo de operatividad de $1.63$ a $3.29$ meses. Esto en promedio alarga mucho mas la duracion en la que el supermercado esta operativo pero tenemos que tener en cuenta que la desviacion estandar pasa de $1.41$ a $3.1$, lo que nos dice que los valores o resultados de las simulaciones son muy variados y poco seguros.
+En el Escenario B nos planteamos la contratacion de un nuevo operario. Segun nuestras simulaciones podemos notar que en promedio pasamos de tener un promedio de tiempo de operatividad de $1.65$ a $3.31$ meses. Esto en promedio alarga mucho mas la duracion en la que el supermercado esta operativo pero tenemos que tener en cuenta que la desviacion estandar pasa de $1.41$ a $3.15$, lo que nos dice que los valores o resultados de las simulaciones son muy variados y poco seguros.
 
-Por otro lado, en el Escenario C nos planteamos la compra de otra maquina de repuesto, manteniendo un operario. A travez de las simulaciones, obtenemos que en tanto a el promedio de tiempo de operatividad tenemos una mejora de $1.63$ a $2.59$. Notamos que la mejora no es tan grande como la del Escenario B, pero en su defensa podemos ver que su desviacion estandar empeoro de $1.41$ a $2.23$ en relacion a la del escenario A. Esta desviacion es mejor que la del Escenario B por lo que la simulacion es mas confiable.
+Por otro lado, en el Escenario C nos planteamos la compra de otra maquina de repuesto, manteniendo un operario. A travez de las simulaciones, obtenemos que en tanto a el promedio de tiempo de operatividad tenemos una mejora de $1.65$ a $2.62$. Notamos que la mejora no es tan grande como la del Escenario B, pero en su defensa podemos ver que su desviacion estandar empeoro de $1.41$ a $2.27$ en relacion a la del escenario A. Esta desviacion es mejor que la del Escenario B por lo que la simulacion es mas confiable.
 
 En conclucion, tomar la desicion de contratar otro operario es considerablemente mejor en terminos promedio de tiempo de operatividad del supermercado, pero debido a que esto implica agregar otra variable a nuestra simulacion, incrementa la desviacion estandar por lo que los distintos resultados posibles son mas dispersos. 
 
