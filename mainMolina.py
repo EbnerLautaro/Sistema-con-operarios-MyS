@@ -72,7 +72,8 @@ def ejercicio_2(N: int, S: int, Tf: float, Tr: float) -> float:
 
         elif tiempos_fallo[0] >= prox_rep1 and prox_rep2 >= prox_rep1:  # reparacion
             maquinas_repuesto += 1
-            if maquinas_repuesto < S:  # si no tengo todos los repuestos ok
+            if maquinas_repuesto < S-1:
+                # si no tengo todos los repuestos ok
                 prox_rep1 = prox_rep1 + \
                     exponencial(lamda=lamda_reparacion)
             else:
@@ -80,12 +81,12 @@ def ejercicio_2(N: int, S: int, Tf: float, Tr: float) -> float:
 
         elif tiempos_fallo[0] >= prox_rep2 and prox_rep1 >= prox_rep2:
             maquinas_repuesto += 1
-            if maquinas_repuesto < S:  # si no tengo todos los repuestos ok
+            if maquinas_repuesto < S-1:  # si no tengo todos los repuestos ok
                 prox_rep2 = prox_rep2 + \
                     exponencial(lamda=lamda_reparacion)
             else:
                 prox_rep2 = math.inf
-
+        assert maquinas_repuesto <= S
     return tiempos_fallo[0]
 
 
@@ -93,12 +94,25 @@ if __name__ == '__main__':
     from aux import calcular_metricas
 
     def sim():
-        return ejercicio_2(7, 3, 1, 8)
+        return ejercicio_1(7, 3, 1, 8)
 
     esperanza, varianza = calcular_metricas(
         sim=sim, n_sim=10000
     )
-    print("\n\nsimulacion_2_operarios - molina\n\n")
+
+    def sim2():
+        return ejercicio_2(7, 3, 1, 8)
+
+    esperanza2, varianza2 = calcular_metricas(
+        sim=sim2, n_sim=10000
+    )
+
+    print("\n\nsimulacion_1_operario - molina\n\n")
     print(f"Esperanza\t{esperanza}")
     print(f"Varianza \t{varianza}")
     print(f"Desviacion\t{math.sqrt(varianza)}")
+
+    print("\n\nsimulacion_2_operarios - molina\n\n")
+    print(f"Esperanza\t{esperanza2}")
+    print(f"Varianza \t{varianza2}")
+    print(f"Desviacion\t{math.sqrt(varianza2)}")

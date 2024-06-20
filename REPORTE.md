@@ -39,12 +39,19 @@ Este enfoque nos permitirá no solo entender el comportamiento del sistema bajo 
 
 ## Algoritmo y descripcion de las variables
 
-Como ya mencionamos antes, las variables o parametros de la simulacion utilizados fueron:
+Como ya mencionamos antes, los parametros de la simulacion utilizados fueron:
 
   - $N$: Número de cajas registradoras en servicio.
   - $S$: Número de máquinas de repuesto.
   - $T_{F}$: Tiempo medio hasta que una caja registradora falla.
   - $T_{R}$: Tiempo medio de reparación de una caja registradora.
+
+Y las variables utilizadas en la simulacion 
+
+  - t: Representa el tiempo en el que esta presente la simulacion.
+  - cant_defectuosas: En todo momento es la cantidad de maquinas defectuosas que pueden o no estar siendo reparadas.
+  - t_reparacion: Es una lista con los proximos tiempos en los que sera reparada una maquina. 
+  - fallos: Es una lista con los proximos tiempos en los que se rompera una maquina.
 
 A continuacion daremos una simple explicacion del algoritmo planteado.
 
@@ -52,17 +59,45 @@ A continuacion daremos una simple explicacion del algoritmo planteado.
 Inicializamos los tiempos de reparaciones en infinito, simbolizamos con esto que no se esta reparando ninguna maquina.
 De manera similar, inicializamos generamos $N$ tiempos de falla para las maquinas y los ordenamos de menor a mayor.
 
-```python
-t_reparacion = [math.inf for _ in range(M)]
-fallos = [random.expovariate(Tf) for _ in range(N)]
-fallos.sort()
-```
-
 ### Bucle principal de la simulacion
-Una vez completada la inicializacion, nos preguntamos cual es el proximo evento, es decir, si el proximo evento es un **fallo de una maquina** o una **finalizacion de una reparacion**. 
-```python
-if fallos[0] < t_reparacion:
-    # Ocurre un fallo antes de una reparacion
-elif fallos >= t_reparacion:
-    # Ocurre una reparacion antes de un fallo
-```
+Una vez completada la inicializacion, nos preguntamos cual es el proximo evento, es decir, si el proximo evento es un **fallo de una maquina** o una **finalizacion de una reparacion**. Realizamos esto hasta que el supermercado deje de ser operativo.
+
+#### El proximo evento es un fallo de una maquina
+En este caso, realizamos las siguientes actualizaciones o procedimientos:
+- Adelantamos el tiempo de la simulacion a el tiempo del evento y actualizamos lacantidad de maquinas defectuosas.
+- Si no se esta reparando una maquina, empezamos a repararla
+- Luego del fallo de la maquina, el estado del supermercado puede seguir siendo operativo *(sigue habiendo maquinas de repuesto)* o dejar de serlo *(no hay mas maquinas de repuesto)*.
+#### El proximo evento es una reparacion de una maquina
+En este caso realizamos los siguientes cambios:
+- Adelantamos el tiempo de la simulacion a el tiempo del evento y actualizamos lacantidad de maquinas defectuosas.
+- Luego, nos fijamos si tenemos alguna maquina "esperando" a ser reparada, si este fuese el caso, empezamos a repararla actualizando el tiempo de reparacion, caso contrario, re-definimos el tiempo de reparacion como infinito.
+
+## Presentacion de resulados
+Con los algoritmos adjuntados realizamos simulaciones, correspondientes a:
+- **Escenario A:** Supermercado con 7 cajas registradoras, 3 de repuesto y 1 operario
+- **Escenario B:** Supermercado con 7 cajas registradoras, 3 de repuesto y 2 operario
+- **Escenario C:** Supermercado con 7 cajas registradoras, 4 de repuesto y 1 operario
+  
+En todos los casos, el operario se tarda en promedio $1/8$ de mes en reparar una maquina, y las maquinas se rompen en promedio cada $1$ mes.
+A continuacion, mostramos los datos obtenidos en histogramas:
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 0px; grid-gap: 8px">
+    <img src="assets/Histograma-A.svg">
+    <img src="assets/Histograma-B.svg">
+    <img src="assets/Histograma-C.svg">
+</div>
+
+<p align="center">
+  <img src="assets/Media.svg" height=250px/>
+</p>
+
+
+## Conclusiones
+Al ver los tres resultados podemos ponernos en la piel de un gerente de dicho establecimiendo y teniendo en cuenta que la siituacion actual del supermercado es el escenario A, nos proponemos tomar desiciones sobre que seria mas conveniente, agregar una caja registradora de repuesto o contratar a otro operario.
+
+En el Escenario B nos planteamos la contratacion de un nuevo operario. Segun nuestras simulaciones podemos notar que en promedio pasamos de tener un promedio de tiempo de operatividad de $1.63$ a $3.29$ meses. Esto en promedio alarga mucho mas la duracion en la que el supermercado esta operativo pero tenemos que tener en cuenta que la desviacion estandar pasa de $1.41$ a $3.1$, lo que nos dice que los valores o resultados de las simulaciones son muy variados y poco seguros.
+
+Por otro lado, en el Escenario C nos planteamos la compra de otra maquina de repuesto, manteniendo un operario. A travez de las simulaciones, obtenemos que en tanto a el promedio de tiempo de operatividad tenemos una mejora de $1.63$ a $2.59$. Notamos que la mejora no es tan grande como la del Escenario B, pero en su defensa podemos ver que su desviacion estandar empeoro de $1.41$ a $2.23$ en relacion a la del escenario A. Esta desviacion es mejor que la del Escenario B por lo que la simulacion es mas confiable.
+
+En conclucion, tomar la desicion de contratar otro operario es considerablemente mejor en terminos promedio de tiempo de operatividad del supermercado, pero debido a que esto implica agregar otra variable a nuestra simulacion, incrementa la desviacion estandar por lo que los distintos resultados posibles son mas dispersos. 
+
+Personalmente consideramos que la opcion B es mejor a pesar del riego que implica.
